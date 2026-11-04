@@ -781,7 +781,7 @@ function hoLabel(u){const m=u.ho||{},c=m.cands||[];const B2=(D.buildings2||[]).f
  if(c.length>4)return {t:`추정 ${pos}`,s:`같은 면적 호실 ${m.n||c.length}개 (${c.slice(0,3).map(x=>x.ho).join(', ')} 등)`,est:true};
  if(gen)return {t:`추정 ${pos}`,s:'일반건축물 · 대장에 호실 구분 없음',est:true};
  return {t:`추정 ${pos}`,s:m.status&&m.status!=='-'?m.status:'호실 자료 없음',est:true}}
-function hoHTML(u){const h=hoLabel(u);return `<span class="ho${h.est?' est':''}">${esc(h.t)}${h.est?' (추정)':''}</span> <small class="muted">${esc(h.s)}</small>`}
+function hoHTML(u){const h=hoLabel(u);return `<span class="ho${h.est?' est':''}">${esc(h.t)}${h.est&&!h.t.startsWith('추정')?' (추정)':''}</span> <small class="muted">${esc(h.s)}</small>`}
 function shareText(b,us){const n=bn(b.key);let t=`[${b.name}] ${isDone(b)?'✅확인함':'⬜미확인'}\n${b.addr||''}\n`;if(n.memo)t+=`메모: ${n.memo}\n`;
  us.forEach(u=>{const h=hoLabel(u);const m=(notes[u.uid]||{}).memo;t+=`· ${u.floor}층 ${h.t}${h.est?'(추정)':''} | ${u.tt} ${label(u)} (보/월/권 만원) | ${u.status}${(u.nbroker||1)>1?' | 중개사 '+u.nbroker+'곳':''}${u.exc?' | 전용 '+(u.exc/3.3058).toFixed(1)+'평':''}${m?' | 메모: '+m:''}\n`});
  return t+`(네이버부동산 기준 · ${D.generated})`}
